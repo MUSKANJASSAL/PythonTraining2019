@@ -59,19 +59,107 @@ button.pack()
 # ----------------------------------------------------- #
 # Mouse Click Events #
 
-def leftClick(event):
-    print("LEFT")
+# def leftClick(event):
+#     print("LEFT")
+#
+# def middleClick(event):
+#     print("MIDDLE")
+#
+# def rightClick(event):
+#     print("RIGHT")
+#
+# frame = Frame(root, width=300, height=250)
+# frame.bind("<Button-1>", leftClick())
+# frame.bind("<Button-2>", middleClick())
+# frame.bind("<Button-3>", rightClick())
+# frame.pack()
 
-def middleClick(event):
-    print("MIDDLE")
+# ----------------------------------------------------- #
+# USING CLASSES #
 
-def rightClick(event):
-    print("RIGHT")
+class But:
+    def __init__(self, master):
+        frame = Frame(master)
+        frame.pack()
 
-frame = Frame(root, width=300, height=250)
-frame.bind("<Button-1>", leftClick())
-frame.bind("<Button-2>", middleClick())
-frame.bind("<Button-3>", rightClick())
-frame.pack()
+        self.printButton = Button(frame, text="Print Message", command=self.printMessage)
+        self.printButton.pack(side=LEFT)
+
+        self.quitButton =  Button(frame, text="Quit", command=frame.quit)
+        self.quitButton.pack(side=LEFT)
+
+    def printMessage(self):
+        print("WOW!! This actually worked")
+
+b = But(root)
+
+# ----------------------------------------------------- #
+# Creating Drop Down Menus #
+
+def doNothing():
+    print("Ok ok I won't...")
+
+menu = Menu(root)
+root.config(menu=menu)
+
+subMenu = Menu(menu)
+menu.add_cascade(label="File", menu=subMenu)
+subMenu.add_command(label="New Project...", command=doNothing)
+subMenu.add_command(label="New...", command=doNothing)
+subMenu.add_separator()
+subMenu.add_command(label="Exit", command=doNothing)
+
+editMenu = Menu(menu)
+menu.add_cascade(label="Edit", menu=editMenu)
+editMenu.add_command(label="Redo", command=doNothing)
+
+# ----------------------------------------------------- #
+# Creating a Toolbar #
+
+toolbar = Frame(root, bg="blue")
+
+insertButt = Button(toolbar, text="Insert Image", command=doNothing)
+insertButt.pack(side=LEFT, padx=2, pady=2)
+printButt = Button(toolbar, text="Print", command=doNothing)
+printButt.pack(side=LEFT, padx=2, pady=2)
+
+toolbar.pack(side=TOP, fill=X)
+
+# ----------------------------------------------------- #
+# Adding the Status Bar #
+
+status = Label(root, text="Preparing to do nothing...", bd=1, relief= SUNKEN, anchor=W)
+status.pack(side=BOTTOM, fill=X)
+
+# ----------------------------------------------------- #
+# Message Box #
+
+import tkinter.messagebox
+
+tkinter.messagebox.showinfo("Window Title", "Monkeys can live up to 300 years")
+answer = tkinter.messagebox.askquestion('Question 1', 'Do you like silly faces?')
+
+if answer == 'yes':
+    print("*****")
+
+# ----------------------------------------------------- #
+# Shapes and Graphics #
+
+canvas = Canvas(root, width=200, height=100)
+canvas.pack()
+
+blackLine = canvas.create_line(0, 0, 200, 50)
+redLine = canvas.create_line(0, 100, 200, 50, fill="red")
+greenBox = canvas.create_rectangle(25, 25, 10, 60, fill="green")
+
+canvas.delete(redLine)
+canvas.delete(ALL)
+
+# ----------------------------------------------------- #
+# Images and Icons #
+
+photo = PhotoImage(file='data.png')
+label =Label(root, image=photo)
+label.pack()
 
 root.mainloop()
